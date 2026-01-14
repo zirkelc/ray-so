@@ -4,7 +4,7 @@ import { Language, LANGUAGES } from "../util/languages";
 
 import styles from "./Editor.module.css";
 import { highlightedLinesAtom, highlighterAtom, loadingLanguageAtom } from "../store";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { themeDarkModeAtom, themeAtom } from "../store/themes";
 
 type PropTypes = {
@@ -24,7 +24,7 @@ const HighlightedCode: React.FC<PropTypes> = ({ selectedLanguage, code }) => {
   useEffect(() => {
     const generateHighlightedHtml = async () => {
       if (!highlighter || !selectedLanguage || selectedLanguage === LANGUAGES.plaintext) {
-        return code.replace(/[\u00A0-\u9999<>\&]/g, (i) => `&#${i.charCodeAt(0)};`);
+        return code.replace(/[\u00A0-\u9999<>&]/g, (i) => `&#${i.charCodeAt(0)};`);
       }
 
       const loadedLanguages = highlighter.getLoadedLanguages() || [];

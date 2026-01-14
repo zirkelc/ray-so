@@ -11,6 +11,7 @@ import useIsSafari from "../util/useIsSafari";
 import Editor from "./Editor";
 import FlashMessage from "./FlashMessage";
 import ResizableFrame from "./ResizableFrame";
+import QrCodeOverlay from "./QrCodeOverlay";
 
 import styles from "./Frame.module.css";
 import { codeAtom, selectedLanguageAtom } from "../store/code";
@@ -904,6 +905,7 @@ const Frame = ({ resize = true }: { resize?: boolean }) => {
       <div className={styles.frameContainer}>
         <div className={styles.outerFrame} ref={frameContext} id="frame">
           {renderFrame()}
+          <QrCodeOverlay />
         </div>
       </div>
     );
@@ -915,6 +917,7 @@ const Frame = ({ resize = true }: { resize?: boolean }) => {
         <FlashMessage />
         <div className={styles.outerFrame} ref={frameContext} id="frame">
           {renderFrame()}
+          <QrCodeOverlay />
         </div>
       </ResizableFrame>
     </div>

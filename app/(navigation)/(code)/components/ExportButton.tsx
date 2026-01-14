@@ -19,6 +19,7 @@ import { useAtom, useAtomValue } from "jotai";
 import { EXPORT_SIZE_OPTIONS, SIZE_LABELS, exportSizeAtom } from "../store/image";
 import { autoDetectLanguageAtom, selectedLanguageAtom } from "../store/code";
 import { LANGUAGES } from "../util/languages";
+import { shortIdAtom, shortLinkUrlAtom } from "../store/short-link";
 import { ButtonGroup } from "@/components/button-group";
 import { Button } from "@/components/button";
 import {
@@ -47,6 +48,27 @@ const ExportButton: React.FC = () => {
   const [exportSize, setExportSize] = useAtom(exportSizeAtom);
   const selectedLanguage = useAtomValue(selectedLanguageAtom);
   const autoDetectLanguage = useAtomValue(autoDetectLanguageAtom);
+  const shortId = useAtomValue(shortIdAtom);
+  const shortLinkUrl = useAtomValue(shortLinkUrlAtom);
+
+  /** Copy short link to clipboard (snippet is auto-saved via useAutoSaveSnippet hook) */
+  const copyShortLink = async () => {
+    if (!shortId || !shortLinkUrl) {
+      setFlashMessage({
+        icon: <LinkIcon />,
+        message: `Click "Embed Link" first to generate a short link`,
+        timeout: 2_000,
+      });
+      return;
+    }
+
+    await navigator.clipboard.writeText(shortLinkUrl);
+    setFlashMessage({
+      icon: <LinkIcon />,
+      message: `Short link copied!`,
+      timeout: 2_000,
+    });
+  };
 
   const savePng = async () => {
     if (!frameContext?.current) {
@@ -60,7 +82,6 @@ const ExportButton: React.FC = () => {
     });
 
     download(dataUrl, `${fileName}.png`);
-
     setFlashShown(false);
   };
 
@@ -70,21 +91,18 @@ const ExportButton: React.FC = () => {
       throw new Error("Couldn't find a frame to export");
     }
 
-    const clipboardItem = new ClipboardItem(
-      {
-        "image/png": toBlob(frameContext.current, {
-          pixelRatio: exportSize,
-        }).then((blob) => {
-            if (!blob) {
-              throw new Error("expected toBlob to return a blob");
-            }
-            return blob;
-        }),
-      }
-    );
+    const clipboardItem = new ClipboardItem({
+      "image/png": toBlob(frameContext.current, {
+        pixelRatio: exportSize,
+      }).then((blob) => {
+        if (!blob) {
+          throw new Error("expected toBlob to return a blob");
+        }
+        return blob;
+      }),
+    });
 
     await navigator.clipboard.write([clipboardItem]);
-
     setFlashMessage({ icon: <ClipboardIcon />, message: "PNG Copied to clipboard!", timeout: 2000 });
   };
 
@@ -213,6 +231,9 @@ const ExportButton: React.FC = () => {
               <Kbd>⇧</Kbd>
               <Kbd>C</Kbd>
             </Kbds>
+          </DropdownMenuItem>
+          <DropdownMenuItem onSelect={dropdownHandler(copyShortLink)}>
+            <LinkIcon /> Copy Short Link
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuSub>
