@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useAtomValue } from "jotai";
 import { shortIdAtom } from "../store/short-link";
 
@@ -48,7 +48,27 @@ async function persistSnippet(id: string): Promise<boolean> {
 }
 
 /**
+ * Hook that returns a function to save the snippet to KV.
+ * Call this when the user clicks the embed link button.
+ */
+export function useSaveSnippet() {
+  const shortId = useAtomValue(shortIdAtom);
+
+  const saveSnippet = useCallback(
+    async (id?: string) => {
+      const snippetId = id || shortId;
+      if (!snippetId) return false;
+      return persistSnippet(snippetId);
+    },
+    [shortId],
+  );
+
+  return saveSnippet;
+}
+
+/**
  * Hook that auto-saves the snippet to KV whenever the URL hash changes.
+ * Only starts saving after a short ID has been assigned (i.e., embed link was clicked).
  * Uses debouncing to avoid excessive API calls.
  */
 export function useAutoSaveSnippet() {
@@ -57,6 +77,7 @@ export function useAutoSaveSnippet() {
   const lastHashRef = useRef<string | null>(null);
 
   useEffect(() => {
+    /** Only auto-save if a short ID exists (embed link was clicked at least once) */
     if (!shortId) return;
 
     const handleHashChange = () => {
@@ -80,7 +101,7 @@ export function useAutoSaveSnippet() {
     /** Listen for hash changes */
     window.addEventListener(`hashchange`, handleHashChange);
 
-    /** Also trigger on initial mount and when shortId changes */
+    /** Also trigger on initial mount when shortId becomes available */
     handleHashChange();
 
     return () => {

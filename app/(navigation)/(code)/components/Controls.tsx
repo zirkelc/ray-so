@@ -7,7 +7,6 @@ import LanguageControl from "./LanguageControl";
 import PaddingControl from "./PaddingControl";
 import ThemeControl from "./ThemeControl";
 import LineNumberControl from "./LineNumberControl";
-import QrCodeControl from "./QrCodeControl";
 
 const Controls: React.FC = () => {
   return (
@@ -18,7 +17,6 @@ const Controls: React.FC = () => {
       <LineNumberControl />
       <PaddingControl />
       <LanguageControl />
-      <QrCodeControl />
     </div>
   );
 };

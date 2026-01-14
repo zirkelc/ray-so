@@ -6,7 +6,6 @@ A fork of [ray.so](https://github.com/raycast/ray-so) trimmed down to the **Code
 
 - Create beautiful images of your code
 - Share via short links (e.g., `yourdomain.com/Ab3Cd`)
-- Optional QR code overlay
 - Embed link as comment in code
 
 ## Deploy Your Own

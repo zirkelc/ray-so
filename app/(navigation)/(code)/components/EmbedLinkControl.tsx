@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import React from "react";
 import { codeAtom, selectedLanguageAtom } from "../store/code";
 import { shortIdAtom } from "../store/short-link";
@@ -6,22 +6,26 @@ import { wrapInComment } from "../util/comment-syntax";
 import { LANGUAGES } from "../util/languages";
 import { Button } from "@/components/button";
 import LinkIcon from "../assets/icons/link-16.svg";
-import { useAutoSaveSnippet } from "../hooks/useAutoSaveSnippet";
+import { useAutoSaveSnippet, useSaveSnippet } from "../hooks/useAutoSaveSnippet";
 
 const EmbedLinkControl: React.FC = () => {
   const [code, setCode] = useAtom(codeAtom);
   const selectedLanguage = useAtomValue(selectedLanguageAtom);
   const [shortId, initShortId] = useAtom(shortIdAtom);
+  const saveSnippet = useSaveSnippet();
 
-  /** Auto-save snippet whenever code/settings change */
+  /** Auto-save snippet whenever code/settings change (only after embed link clicked once) */
   useAutoSaveSnippet();
 
-  const handleInsertLink = () => {
+  const handleInsertLink = async () => {
     /** Initialize short ID if not already set */
     let id = shortId;
     if (!id) {
       id = initShortId();
     }
+
+    /** Save snippet to KV */
+    await saveSnippet(id);
 
     /** Build the short link URL */
     const url = `${window.location.origin}/${id}`;

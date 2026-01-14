@@ -16,6 +16,4 @@ export function isExportSize(value: ExportSize | unknown): value is ExportSize {
 
 const exportSizeAtom = atomWithStorage<ExportSize>("size", EXPORT_SIZE_OPTIONS[1]);
 
-const showQrCodeAtom = atomWithStorage<boolean>("showQrCode", false);
-
-export { exportSizeAtom, showQrCodeAtom };
+export { exportSizeAtom };
