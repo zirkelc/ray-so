@@ -1,83 +1,37 @@
-<!-- TEXT_SECTION:header:START -->
-<p align="center">
-  <a href="https://ray.so" target="_blank" rel="noopener noreferrer">
-    <img width="1024" src="app/assets/og-image.png" alt="ray.so">
-  </a>
-</p>
-<h1 align="center">
-  ray.so
-</h1>
-<h3 align="center">
-  Built by <a href="https://raycast.com/#ref=ray.so" target="_blank" rel="noopener noreferrer">Raycast</a>
-</h3>
-<p align="center">
-  Create code snippets, browse AI prompts, create extension icons and more.
-</p>
+# ray.so (Code Images Fork)
 
-<p align="center">
-  <a aria-label="Follow Raycast on X" href="https://x.com/raycast">
-    <img alt="" src="https://img.shields.io/badge/Follow%20@raycastapp-black.svg?style=for-the-badge&logo=X">
-  </a>
-  <a aria-label="Join the community on Slack" href="https://raycast.com/community">
-    <img alt="" src="https://img.shields.io/badge/Join%20the%20community-black.svg?style=for-the-badge&logo=Slack">
-  </a>
-</p>
+A fork of [ray.so](https://github.com/raycast/ray-so) trimmed down to the **Code Images** feature.
 
-<!-- TEXT_SECTION:header:END -->
+## Features
 
-## About
+- Create beautiful images of your code
+- Share via short links (e.g., `yourdomain.com/Ab3Cd`)
+- Optional QR code overlay
+- Embed link as comment in code
 
-This repository contains the source code for [ray.so](https://ray.so), a collection of tools built by [Raycast](https://raycast.com/#ref=ray.so). It includes:
+## Deploy Your Own
 
-- [**Code Images**](</app/(navigation)/(code)>): Create beautiful images of your code.
-- [**Icon Maker**](</app/(navigation)/icon/>): Create beautiful icons for Raycast Extensions.
-- [**Prompt Explorer**](</app/(navigation)/prompts/>): Explore AI Prompts for Raycast.
-- [**Preset Explorer**](</app/(navigation)/presets/>): Explore AI Presets for Raycast.
-- [**Quicklink Explorer**](</app/(navigation)/quicklinks/>): Browse and import Raycast Quicklinks.
-- [**Snippet Explorer**](</app/(navigation)/snippets/>): Browse and import Raycast Snippets.
-- [**Theme Explorer**](</app/(navigation)/themes/>): Browse and import Raycast Themes.
+1. Fork this repo
+2. Deploy to [Vercel](https://vercel.com)
+3. Add a custom domain
+4. Create a [Cloudflare KV](https://developers.cloudflare.com/kv/) namespace
+5. Set environment variables (see below)
 
-## Setup
+## Environment Variables
 
-This is a [Next.js](https://nextjs.org/) project. If you're unfamiliar with it, check out the [Next.js Documentation](https://nextjs.org/docs).
-
-To get started, download the repo, install dependencies and run the development server:
-
-```bash
-npm install
-npm run dev
+```
+CLOUDFLARE_ACCOUNT_ID=xxx
+CLOUDFLARE_KV_NAMESPACE_ID=xxx
+CLOUDFLARE_API_TOKEN=xxx
 ```
 
-## Contributing
+## Local Development
 
-We welcome contributions primarily in the form of new presets, prompts, snippets, themes, and bug fixes.
+```bash
+pnpm install
+pnpm dev
+```
 
-> [!NOTE]
-> If you're interested in creating a new code theme we recommend forking the project to run your own version. However, certain partner themes may be considered. Please reach out by creating an issue or [contacting us](mailto:feedback+rayso@raycast.com) first.
+## Credits
 
-If you're interested in contributing, follow the steps below:
-
-### Presets, Prompts, Quicklinks & Snippets
-
-- Open [prompts.ts](</app/(navigation)/prompts/prompts.ts>) or [presets.ts](</app/(navigation)/presets/presets.ts>) or [snippets.ts](</app/(navigation)/snippets/snippets.ts>) or [quicklinks.ts](</app/(navigation)/quicklinks/quicklinks.ts>)
-- Add your data to the relevant category
-  - Ensure it includes all fields, and that they're unique within their category
-- Add your name and (optional) website url to the `author` field
-- Create a pull request 🚀
-
-### Themes
-
-#### 1. Copy the Theme JSON from Raycast
-
-- Open Theme Studio in Raycast
-- Right click on your Theme and select "Copy as JSON"
-
-#### 2. Add the theme to repo
-
-- In [themes](</app/(navigation)/themes/themes>), create a folder with your Raycast username, ie: `peduarte`
-- In that folder, create a file with the theme name, ie: `red.json`
-- In that file, paste the theme JSON you copied from Raycast's Theme Studio
-
-#### 3. Commit and push your changes
-
-- Create a Pull Request 🚀
+Built on [ray.so](https://ray.so) by [Raycast](https://raycast.com).
