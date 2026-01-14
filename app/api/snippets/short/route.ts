@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
 
     /** Build URL based on request origin */
     const origin = req.headers.get(`origin`) || `https://ray.so`;
-    const url = `${origin}/code/${id}`;
+    const url = `${origin}/${id}`;
 
     return NextResponse.json({ id, url });
   } catch (error) {

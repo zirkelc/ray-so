@@ -21,5 +21,5 @@ export const shortLinkUrlAtom = atom((get) => {
   const id = get(previewShortIdAtom);
   if (!id) return null;
   if (typeof window === `undefined`) return null;
-  return `${window.location.origin}/code/${id}`;
+  return `${window.location.origin}/${id}`;
 });

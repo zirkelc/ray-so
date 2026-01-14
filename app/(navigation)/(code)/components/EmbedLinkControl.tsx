@@ -24,7 +24,7 @@ const EmbedLinkControl: React.FC = () => {
     }
 
     /** Build the short link URL */
-    const url = `${window.location.origin}/code/${id}`;
+    const url = `${window.location.origin}/${id}`;
 
     /** Get the language key for comment syntax */
     const languageKey = Object.keys(LANGUAGES).find((key) => LANGUAGES[key] === selectedLanguage) || null;
